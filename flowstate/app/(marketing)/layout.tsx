@@ -1,16 +1,16 @@
-const MarketingLayout = (
-    {children}:{
-        children: React.ReactNode
-    }
-) => {
-    return (
-        <div className="h-full bg-slate-100">
-            <main className="pt-40 pb-20 bg-slate-100">
+import { Footer } from "./_components/footer";
+import { Navbar } from "./_components/navbar";
 
-            {children}
-            </main>
-        </div>
-    )
-}
+const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="h-full bg-slate-100">
+      <Navbar />
 
-export default MarketingLayout
+      <main className="pt-40 pb-20 bg-slate-100">{children}</main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default MarketingLayout;
