@@ -1,7 +1,7 @@
 const OrganizationIdPage = ({params} : {params:{organizationId: string}}) => {
     return (
         <div>
-            Organization Id : {params.organizationId}
+            Organization Page
         </div>
     )
 }
