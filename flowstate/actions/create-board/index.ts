@@ -20,7 +20,6 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   const {title} = data
   let board;
   try {
-    throw new Error("makelode kya kr rha h ?")
     board = await db.board.create({
       data: {
         title

@@ -2,8 +2,8 @@
 
 import { createBoard } from "@/actions/create-board/index"
 import { useAction } from "@/hooks/use-action"
-import FormButton from "./form-button"
-import FormInput from "./form-input"
+import { FormInput } from "@/components/form/form-input"
+import { FormSubmit } from "@/components/form/form-submit"
 
 
 interface ErrorProps {
@@ -29,10 +29,20 @@ export const Form = ({errors}: ErrorProps) => {
         <form action={onSubmit}>
             <div className="flex flex-col space-y-2">
 
-                <FormInput errors = {FieldErrors}/>
+                <FormInput 
+                        id="title"
+                        errors = {FieldErrors}
+                        label="Board Label"
+                />
             </div>
 
-           <FormButton />
+           <FormSubmit>
+            Save
+           </FormSubmit>
+            
+
+
+        
         </form>
     )
 }
