@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { ElementRef, useRef } from "react";
 import {
   Popover,
   PopoverClose,
@@ -14,6 +14,8 @@ import { FormSubmit } from "./form-submit";
 import { createBoard } from "@/actions/create-board";
 import { useAction } from "@/hooks/use-action";
 import { toast } from "sonner";
+import { FormPicker } from "./form-picker";
+import { useRouter } from "next/navigation";
 
 interface FormPopoverProps {
   children?: React.ReactNode;
@@ -28,11 +30,16 @@ export const FormPopover = ({
   align,
   sideOffset = 0,
 }: FormPopoverProps) => {
+    const closeRef = useRef<ElementRef<"button">>(null);
+    const router = useRouter();
+
 
     const {execute, FieldErrors} = useAction(createBoard, {
         onSuccess: (data) => {
-            console.log({data})
             toast.success("Board Created")
+            closeRef.current?.click()
+            console.log("closed")
+            router.push(`/board/${data.id}`)
         },
         onError: (error) => {
             console.log({error})
@@ -42,7 +49,9 @@ export const FormPopover = ({
 
     const onSubmit = (formData: FormData) => {
         const title = formData.get("title") as string
-        execute({title})
+        const image = formData.get('image') as string
+        execute({title, image})
+        
     }
 
   return (
@@ -60,6 +69,7 @@ export const FormPopover = ({
         </div>
         <PopoverClose asChild>
           <Button
+            ref={closeRef}
             className="h-auto w-auto p-2 absolute top-2 right-2 text-neutral-600"
             variant={"ghost"}
           >
@@ -68,6 +78,10 @@ export const FormPopover = ({
         </PopoverClose>
         <form action={onSubmit} className="space-y-4">
             <div className="space-y-4">
+                <FormPicker 
+                    id="image"
+                    errors={FieldErrors}
+                />
                 <FormInput 
                     id='title'
                     label="Board title"
@@ -76,9 +90,13 @@ export const FormPopover = ({
                 />
             </div>
             <FormSubmit
+                
                 className="w-full"
             >
-                Create
+                <button>
+                    Create
+                </button>
+
             </FormSubmit>
         </form>
       </PopoverContent>
