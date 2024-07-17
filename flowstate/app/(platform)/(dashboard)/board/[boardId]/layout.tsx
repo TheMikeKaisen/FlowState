@@ -28,18 +28,20 @@ const BoardIdLayout = async ({
     if(!board){
         notFound(); // redirect to not found page!
     }
-  return (
-    <div
-          className='relative min-h-screen h-full bg-no-repeat bg-center bg-cover'
+    return (
+      <div
+          className='relative h-full min-h-screen bg-no-repeat bg-center bg-cover overflow-hidden'
           style={{ backgroundImage: `url(${board.imageFullUrl})` }}
       >
-        <BoardNavbar data={board} />
-        <div className='absolute inset-0 bg-black/10 '/>
-          <main className='relative min-h-screen h-full pt-28'>
-              {children}
+          <BoardNavbar data={board} />
+          <div className='absolute inset-0 bg-black/10' />
+          <main className='relative w-full h-full pt-28'>
+              <div className='max-h-full overflow-y-auto'>
+                  {children}
+              </div>
           </main>
       </div>
-  )
+  );
 }
 
 export default BoardIdLayout

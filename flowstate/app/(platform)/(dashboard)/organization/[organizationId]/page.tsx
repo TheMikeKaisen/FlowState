@@ -6,7 +6,6 @@ import { Suspense } from 'react';
 
 const OrganizationIdPage = async() => {
     
-    const boards = await db.board.findMany();
     return (
         <div className='w-full mb-20'>
             <Info />

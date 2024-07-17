@@ -33,7 +33,7 @@ const BoardIdPage = async({params}: BoardIdPageProps) => {
     },
   });
   return (
-    <div className="h-full p-4 overflow-x-auto">
+    <div className="p-4 min-h-screen overflow-y-auto">
       <ListContainer 
         boardId={params.boardId}
         data={lists}

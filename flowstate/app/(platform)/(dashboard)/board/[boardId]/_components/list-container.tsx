@@ -9,26 +9,28 @@ interface ListContainerProps {
     boardId: string;
     data: ListWithCards[]
 }
-const ListContainer = ({boardId, data}:ListContainerProps) => {
+
+const ListContainer = ({ boardId, data }: ListContainerProps) => {
   const [orderedData, setOrderedData] = useState(data)
 
-  useEffect(()=> {
+  useEffect(() => {
     setOrderedData(data)
   }, [data])
+
   return (
-    <ol className="flex gap-x-3 h-full">
-      {orderedData.map((list, index) => {
-        return (
+    <div className="flex flex-wrap justify-center gap-3 h-full overflow-y-auto">
+      {orderedData.map((list, index) => (
+        <div key={list.id} className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
           <ListItem 
-            key={list.id}
             index={index}
             data={list}
           />
-        )
-      })}
+        </div>
+      ))}
+      <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
         <ListForm />
-      <div className="flex-shrink-0 w-1"/>
-    </ol>
+      </div>
+    </div>
   )
 }
 
