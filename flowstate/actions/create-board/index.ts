@@ -7,6 +7,8 @@ import { revalidatePath } from "next/cache";
 import { createSafeAction } from "@/lib/create-safe-action";
 import { CreateBoard } from "./schema";
 import { ElementRef, useRef } from "react";
+import { createAuditLog } from "@/lib/create-audit-log";
+import { ACTION, ENTITY_TYPE } from "@prisma/client";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
@@ -50,6 +52,12 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       imageLinkHTML
       },
     });
+    await createAuditLog({
+      entityTitle: board.title, 
+      entityId: board.id, 
+      entityType: ENTITY_TYPE.BOARD, 
+      action: ACTION.CREATE
+  })
     console.log("data base created!")
   } catch (error) {
     console.log("error 321: ", error)
