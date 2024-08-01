@@ -47,8 +47,9 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         cancel_url: billingUrl,
         mode: "subscription",
         payment_method_types: ["card"],
-        billing_address_collection: "auto",
+        billing_address_collection: "required",
         customer_email: user.emailAddresses[0].emailAddress,
+        
         line_items: [
           {
             price_data: {

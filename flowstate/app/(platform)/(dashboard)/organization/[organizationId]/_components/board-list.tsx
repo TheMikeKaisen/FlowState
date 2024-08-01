@@ -8,6 +8,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getAvailableCount } from "@/lib/org-limit";
 import { MAX_FREE_BOARDS } from "@/constants/boards";
+import { checkSubscription } from "@/lib/subscription";
 
 
 const BoardList = async () => {
@@ -19,6 +20,7 @@ const BoardList = async () => {
   }
 
   const availableCount = await getAvailableCount();
+  const isPro = await checkSubscription()
 
   try {
     const boards = await db.board.findMany({
@@ -56,7 +58,12 @@ const BoardList = async () => {
               className="aspect-video relative h-full bg-muted rounded-sm flex flex-col gap-y-1 items-center justify-center hover:opacity-75 transition"
             >
               <p className="text-sm">Create new Board</p>
-              <span className="text-xs">{`${MAX_FREE_BOARDS - availableCount}`} Remaining</span>
+              <span className="text-xs">
+                {isPro? "unlimited":
+                `${MAX_FREE_BOARDS - availableCount} Remaining`
+              }
+                
+                </span>
               <Hint
                 sideOffset={40}
                 description={`Free workspaces can have up to 5 open boards. For unlimited boards upgrade this workspace.`}
